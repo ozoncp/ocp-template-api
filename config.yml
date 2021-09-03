@@ -1,0 +1,44 @@
+project:
+  name: Ozon Code Platform Template API
+  debug: true
+  environment: development
+
+grpc:
+  host: 0.0.0.0
+  port: 50051
+  maxConnectionIdle: 5 # Minutes
+  timeout: 15 # Seconds
+  maxConnectionAge: 5 # Minutes
+
+gateway:
+  host: 0.0.0.0
+  port: 8080
+
+metrics:
+  host: 0.0.0.0
+  port: 9100
+  path: /metrics
+
+status:
+  host: 0.0.0.0
+  port: 8000
+  livenessPath: /live
+  readinessPath: /ready
+  versionPath: /version
+
+database:
+  host: database
+  port: 5432
+  user: postgres
+  password: postgres
+  name: ocp_template_api
+  sslMode: disable
+  driver: pgx
+
+kafka:
+  topic: "ocp-template-events"
+  brokers:
+    - "kafka:9092"
+    - "localhost:9094"
+  capacity: 512
+  groupId: "ocp-template-api"

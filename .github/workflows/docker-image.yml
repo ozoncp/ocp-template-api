@@ -1,0 +1,21 @@
+name: Build a Docker image
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set env version
+        run: echo "VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - uses: actions/checkout@v2
+      - name: Build a Docker image
+        run: |
+          docker build . \
+            --build-arg VERSION=$VERSION \
+            --build-arg COMMIT_HASH=$COMMIT_HASH \
+            --tag image:$(date +%s)
