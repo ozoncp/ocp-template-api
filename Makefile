@@ -14,7 +14,7 @@ BUF_VERSION:="v0.51.0"
 GOBIN?=$(GOPATH)/bin
 
 .PHONY: run
-grpc-server:
+run:
 	go run cmd/grpc-server/main.go
 
 .PHONY: lint
