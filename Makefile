@@ -36,6 +36,8 @@ generate: .generate
 .generate:
 	@command -v buf 2>&1 > /dev/null || (mkdir -p $(GOBIN) && curl -sSL0 https://github.com/bufbuild/buf/releases/download/$(BUF_VERSION)/buf-$(shell uname -s)-$(shell uname -m) -o $(GOBIN)/buf && chmod +x $(GOBIN)/buf)
 	PATH=$(GOBIN):$(PATH) buf generate
+	mv pkg/$(SERVICE_NAME)/github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME)/* pkg/$(SERVICE_NAME)
+	rm -rf pkg/$(SERVICE_NAME)/github.com/
 	cd pkg/$(SERVICE_NAME) && ls go.mod || go mod init github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME) && go mod tidy
 
 # ----------------------------------------------------------------
