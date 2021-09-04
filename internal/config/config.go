@@ -24,32 +24,40 @@ type Database struct {
 	Port     string `yaml:"port"`
 	User     string `yaml:"user"`
 	Password string `yaml:"password"`
-	Name     string `yaml:"database"`
+	Name     string `yaml:"name"`
 	SslMode  string `yaml:"sslmode"`
 	Driver   string `yaml:"driver"`
 }
 
 // Grpc - contains parameter address grpc.
 type Grpc struct {
-	Address string `yaml:"address"`
+	Port              int    `yaml:"port"`
+	MaxConnectionIdle int64  `yaml:"maxConnectionIdle"`
+	Timeout           int64  `yaml:"timeout"`
+	MaxConnectionAge  int64  `yaml:"maxConnectionAge"`
+	Host              string `yaml:"host"`
 }
 
 // Rest - contains parameter rest json connection.
 type Rest struct {
-	Address string `yaml:"address"`
+	Port int    `yaml:"port"`
+	Host string `yaml:"host"`
 }
 
 // Project - contains all parameters project information.
 type Project struct {
-	Name    string `yaml:"name"`
-	Author  string `yaml:"author"`
-	Version string `yaml:"version"`
+	Debug       bool   `yaml:"debug"`
+	Name        string `yaml:"name"`
+	Environment string `yaml:"environment"`
+	Version     string
+	CommitHash  string
 }
 
-// Prometheus - contains all parameters metrics information.
-type Prometheus struct {
-	URI  string `yaml:"uri"`
-	Port string `yaml:"port"`
+// Metrics - contains all parameters metrics information.
+type Metrics struct {
+	Port int    `yaml:"port"`
+	Host string `yaml:"host"`
+	Path string `yaml:"path"`
 }
 
 // Jaeger - contains all parameters metrics information.
@@ -60,20 +68,21 @@ type Jaeger struct {
 
 // Kafka - contains all parameters kafka information.
 type Kafka struct {
-	Topic   string   `yaml:"topic"`
-	Brokers []string `yaml:"brokers"`
+	Capacity uint64   `yaml:"capacity"`
+	Topic    string   `yaml:"topic"`
+	GroupID  string   `yaml:"groupId"`
+	Brokers  []string `yaml:"brokers"`
 }
 
 // Config - contains all configuration parameters in config package.
 type Config struct {
-	Project    Project    `yaml:"project"`
-	Grpc       Grpc       `yaml:"grpc"`
-	Rest       Rest       `yaml:"rest"`
-	Database   Database   `yaml:"database"`
-	BatchSize  int        `yaml:"batchSize"`
-	Prometheus Prometheus `yaml:"prometheus"`
-	Jaeger     Jaeger     `yaml:"jaeger"`
-	Kafka      Kafka      `yaml:"kafka"`
+	Project  Project  `yaml:"project"`
+	Grpc     Grpc     `yaml:"grpc"`
+	Rest     Rest     `yaml:"rest"`
+	Database Database `yaml:"database"`
+	Metrics  Metrics  `yaml:"metrics"`
+	Jaeger   Jaeger   `yaml:"jaeger"`
+	Kafka    Kafka    `yaml:"kafka"`
 }
 
 // ReadConfigYML - read configurations from file and init instance Config.

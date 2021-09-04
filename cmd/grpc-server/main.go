@@ -17,13 +17,9 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"
 
-	cfg "github.com/ozoncp/ocp-template-api/internal/config"
+	"github.com/ozoncp/ocp-template-api/internal/config"
 
 	"github.com/pressly/goose/v3"
-)
-
-var (
-	batchSize uint = 2
 )
 
 func NewPostgres(dsn, driver string) *sqlx.DB {
@@ -47,12 +43,14 @@ func main() {
 	migration := flag.String("migration", "", "Defines the migration start option")
 	flag.Parse()
 
-	err := cfg.ReadConfigYML()
+	err := config.ReadConfigYML()
 	if err != nil {
 		log.Fatal().
 			Err(err).
 			Msg("Reading configuration")
 	}
+
+	cfg := config.GetConfigInstance()
 
 	log.Info().
 		Str("version", cfg.Project.Version).
@@ -67,7 +65,7 @@ func main() {
 		cfg.Database.User,
 		cfg.Database.Password,
 		cfg.Database.Name,
-		cfg.Database.SSLMode,
+		cfg.Database.SslMode,
 	)
 
 	db := NewPostgres(dsn, cfg.Database.Driver)

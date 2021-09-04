@@ -1,4 +1,4 @@
-module gitlab.ozon.ru/ozoncp/ocp-template-api
+module github.com/ozoncp/ocp-template-api
 
 go 1.16
 
@@ -8,7 +8,6 @@ require (
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/lib/pq v1.10.3
 	github.com/opentracing/opentracing-go v1.2.0
-	github.com/ozoncp/ocp-template-api v0.0.0-20210903204418-b938ca4c2743
 	github.com/pressly/goose/v3 v3.1.0
 	github.com/rs/zerolog v1.24.0
 	github.com/uber/jaeger-client-go v2.29.1+incompatible
