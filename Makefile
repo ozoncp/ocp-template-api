@@ -38,27 +38,25 @@ generate: .generate
 	PATH=$(GOBIN):$(PATH) buf generate
 	mv pkg/$(SERVICE_NAME)/github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME)/* pkg/$(SERVICE_NAME)
 	rm -rf pkg/$(SERVICE_NAME)/github.com/
-	cd pkg/$(SERVICE_NAME) && ls go.mod || go mod init github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME) && go mod tidy
+	cd pkg/$(SERVICE_NAME) && ls go.mod || (go mod init github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME) && go mod tidy)
 
 # ----------------------------------------------------------------
 
 .PHONY: deps
-deps: .deps .bin-deps
+deps: .deps
 
 .deps:
-	@[ -f go.mod ] || go mod init github.com/$(SERVICE_PATH)
-	find . -name go.mod -exec bash -c 'pushd "$${1%go.mod}" && go mod tidy && popd' _ {} \;
-
-.bin-deps:
 	go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.27.1
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1.0
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@v2.5.0
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.5.0
 	go install github.com/envoyproxy/protoc-gen-validate@$(PGV_VERSION)
-	go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
+	go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@latest
 
 .PHONY: build
-build: generate
+build: generate .build
+
+.build:
 		go mod download && CGO_ENABLED=0  go build \
 			-tags='no_mysql no_sqlite3' \
 			-ldflags=" \
