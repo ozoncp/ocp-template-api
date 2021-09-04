@@ -16,18 +16,21 @@ services:
       - kafka
     links:
       - postgres
+      - kafka
     ports:
-      - 8081:8081 # rest
-      - 8082:8082 # grpc
-      - 9100:9100 # prometheus
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8081/health" ]
-      interval: 1m
-      timeout: 10s
-      retries: 3
-      start_period: 20s
+      - 8081:8081 # REST
+      - 8082:8082 # gRPC
+      - 9100:9100 # Metrics prometheus
+      - 8000:8000 # Status prometheus
+    # healthcheck:
+    #   test: ['CMD', 'curl', '-f', 'http://localhost:8000/live']
+    #   interval: 1m
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 20s
     volumes:
       - ./migrations:/root/migrations
+      - ./config.yml:/root/config.yml
 
   postgres:
     image: postgres:latest

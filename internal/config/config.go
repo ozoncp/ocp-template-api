@@ -78,6 +78,15 @@ type Kafka struct {
 	Brokers  []string `yaml:"brokers"`
 }
 
+// Service status config.
+type Status struct {
+	Port          int    `yaml:"port"`
+	Host          string `yaml:"host"`
+	VersionPath   string `yaml:"versionPath"`
+	LivenessPath  string `yaml:"livenessPath"`
+	ReadinessPath string `yaml:"readinessPath"`
+}
+
 // Config - contains all configuration parameters in config package.
 type Config struct {
 	Project  Project  `yaml:"project"`
@@ -87,6 +96,7 @@ type Config struct {
 	Metrics  Metrics  `yaml:"metrics"`
 	Jaeger   Jaeger   `yaml:"jaeger"`
 	Kafka    Kafka    `yaml:"kafka"`
+	Status   Status   `yaml:"status"`
 }
 
 // ReadConfigYML - read configurations from file and init instance Config.
