@@ -1,4 +1,4 @@
-name: golangci-lint
+name: linters
 on:
   push:
     branches:
@@ -6,6 +6,12 @@ on:
   pull_request:
 
 jobs:
+  buf-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bufbuild/buf-setup-action@v0.3.1
+      - uses: bufbuild/buf-lint-action@v0.3.0
   golangci:
     name: lint
     runs-on: ubuntu-latest
@@ -15,3 +21,4 @@ jobs:
         uses: golangci/golangci-lint-action@v2
         with:
           version: v1.42
+
