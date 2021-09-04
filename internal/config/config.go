@@ -6,7 +6,11 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const configYML = "config.yml"
+// Build information -ldflags .
+var (
+	version    string = "dev"
+	commitHash string = "-"
+)
 
 var cfg *Config
 
@@ -86,7 +90,7 @@ type Config struct {
 }
 
 // ReadConfigYML - read configurations from file and init instance Config.
-func ReadConfigYML() error {
+func ReadConfigYML(configYML string) error {
 	if cfg != nil {
 		return nil
 	}
@@ -101,6 +105,9 @@ func ReadConfigYML() error {
 	if err := decoder.Decode(&cfg); err != nil {
 		return err
 	}
+
+	cfg.Project.Version = version
+	cfg.Project.CommitHash = commitHash
 
 	return nil
 }

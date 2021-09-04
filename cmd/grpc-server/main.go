@@ -43,7 +43,9 @@ func main() {
 	migration := flag.String("migration", "", "Defines the migration start option")
 	flag.Parse()
 
-	if err := config.ReadConfigYML(); err != nil {
+	const configYML = "config.yml"
+
+	if err := config.ReadConfigYML(configYML); err != nil {
 		log.Fatal().
 			Err(err).
 			Msg("Reading configuration")
