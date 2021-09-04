@@ -1,25 +1,6 @@
 version: "3.9"
 
 services:
-  postgres:
-    image: postgres:latest
-    restart: always
-    logging:
-      driver: 'gelf'
-      options:
-        gelf-address: 'udp://localhost:12201'
-        tag: postgres
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-    networks:
-      - ocpnw
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
   ocp-template-api:
     build: .
     restart: unless-stopped
@@ -47,6 +28,25 @@ services:
       start_period: 20s
     volumes:
       - ./migrations:/root/migrations
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    logging:
+      driver: 'gelf'
+      options:
+        gelf-address: 'udp://localhost:12201'
+        tag: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ocp_template_api
+    networks:
+      - ocpnw
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   zookeeper:
     image: confluentinc/cp-zookeeper
@@ -201,6 +201,9 @@ services:
       - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
     networks:
       - ocpnw
+    links:
+      - mongodb:mongo
+      - elasticsearch
     depends_on:
       - mongodb
       - elasticsearch
