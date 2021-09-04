@@ -140,10 +140,10 @@ services:
         tag: prometheus
     ports:
       - 9090:9090
-    volumes:
-      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
     networks:
       - ocpnw
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
 
   grafana:
     image: grafana/grafana:latest
@@ -152,13 +152,13 @@ services:
       - 3000:3000
     links:
       - prometheus:prometheus
-    volumes:
-      - "./data/grafana:/var/lib/grafana"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=MYPASSWORT
       - GF_USERS_ALLOW_SIGN_UP=false
     networks:
       - ocpnw
+    volumes:
+      - "./data/grafana:/var/lib/grafana"
 
 
   # Elasticsearch: https://www.elastic.co/guide/en/elasticsearch/reference/6.x/docker.html
@@ -179,6 +179,16 @@ services:
           memory: 1g
     networks:
       - ocpnw
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  mongodb:
+    image: mongo:4.1
+    restart: always
+    networks:
+      - ocpnw
+    volumes:
+      - mongodata:/data/db
 
   # Graylog: https://hub.docker.com/r/graylog/graylog/
   graylog:
@@ -192,7 +202,7 @@ services:
     networks:
       - ocpnw
     depends_on:
-      - mongo
+      - mongodb
       - elasticsearch
     ports:
       # Graylog web interface and REST API
@@ -208,6 +218,11 @@ services:
 
 volumes:
   pgdata:
+    driver: local
+  esdata:
+    driver: local
+  mongodata:
+    driver: local
 
 networks:
   ocpnw:
