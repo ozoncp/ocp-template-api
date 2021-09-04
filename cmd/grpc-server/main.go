@@ -99,7 +99,7 @@ func RunServer(host string, port int) error {
 
 	server := grpc.NewServer()
 	pb.RegisterOcpTemplateApiServiceServer(server, &ocpTemplateApiServiceServer{})
-	log.Info().Msgf("Listening on %d", listenOn)
+	log.Info().Msgf("Listening on %s", listenOn)
 	if err := server.Serve(listener); err != nil {
 		return fmt.Errorf("failed to serve gRPC server: %w", err)
 	}
