@@ -46,7 +46,6 @@ func NewPostgres(dsn, driver string) *sqlx.DB {
 }
 
 func main() {
-
 	migration := flag.String("migration", "", "Defines the migration start option")
 	flag.Parse()
 

@@ -208,3 +208,5 @@ issues:
     - text: 'shadow: declaration of "(err|ok)"'
       linters:
         - govet
+  exclude:
+    - .*Api.* should be .*API.*
