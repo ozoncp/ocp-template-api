@@ -1,10 +1,9 @@
 package config
 
 import (
-	"gopkg.in/yaml.v3"
 	"os"
-	"strconv"
-	"strings"
+
+	"gopkg.in/yaml.v3"
 )
 
 const configYML = "config.yml"
@@ -15,10 +14,11 @@ func GetConfigInstance() Config {
 	if cfg != nil {
 		return *cfg
 	}
+
 	return Config{}
 }
 
-// Database - contains all parameters database connection
+// Database - contains all parameters database connection.
 type Database struct {
 	Host     string `yaml:"host"`
 	Port     string `yaml:"port"`
@@ -29,42 +29,42 @@ type Database struct {
 	Driver   string `yaml:"driver"`
 }
 
-// Grpc - contains parameter address grpc
+// Grpc - contains parameter address grpc.
 type Grpc struct {
 	Address string `yaml:"address"`
 }
 
-// Rest - contains parameter rest json connection
+// Rest - contains parameter rest json connection.
 type Rest struct {
 	Address string `yaml:"address"`
 }
 
-// Project - contains all parameters project information
+// Project - contains all parameters project information.
 type Project struct {
 	Name    string `yaml:"name"`
 	Author  string `yaml:"author"`
 	Version string `yaml:"version"`
 }
 
-// Prometheus - contains all parameters metrics information
+// Prometheus - contains all parameters metrics information.
 type Prometheus struct {
 	URI  string `yaml:"uri"`
 	Port string `yaml:"port"`
 }
 
-// Jaeger - contains all parameters metrics information
+// Jaeger - contains all parameters metrics information.
 type Jaeger struct {
 	Host string `yaml:"host"`
 	Port string `yaml:"port"`
 }
 
-// Kafka - contains all parameters kafka information
+// Kafka - contains all parameters kafka information.
 type Kafka struct {
 	Topic   string   `yaml:"topic"`
 	Brokers []string `yaml:"brokers"`
 }
 
-// Config - contains all configuration parameters in config package
+// Config - contains all configuration parameters in config package.
 type Config struct {
 	Project    Project    `yaml:"project"`
 	Grpc       Grpc       `yaml:"grpc"`
@@ -76,7 +76,7 @@ type Config struct {
 	Kafka      Kafka      `yaml:"kafka"`
 }
 
-// ReadConfigYML - read configurations from file and init instance Config
+// ReadConfigYML - read configurations from file and init instance Config.
 func ReadConfigYML() error {
 	if cfg != nil {
 		return nil
@@ -89,7 +89,7 @@ func ReadConfigYML() error {
 	defer file.Close()
 
 	decoder := yaml.NewDecoder(file)
-	if err = decoder.Decode(&cfg); err != nil {
+	if err := decoder.Decode(&cfg); err != nil {
 		return err
 	}
 

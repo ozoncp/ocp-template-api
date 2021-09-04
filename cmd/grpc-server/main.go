@@ -47,6 +47,13 @@ func main() {
 	migration := flag.String("migration", "", "Defines the migration start option")
 	flag.Parse()
 
+	err := cfg.ReadConfigYML()
+	if err != nil {
+		log.Fatal().
+			Err(err).
+			Msg("Reading configuration")
+	}
+
 	log.Info().
 		Str("version", cfg.Project.Version).
 		Str("commitHash", cfg.Project.CommitHash).
@@ -63,7 +70,7 @@ func main() {
 		cfg.Database.SSLMode,
 	)
 
-	db := database.NewPostgres(dsn, cfg.Database.Driver)
+	db := NewPostgres(dsn, cfg.Database.Driver)
 
 	if *migration != "" {
 		Migrate(db.DB, *migration)
