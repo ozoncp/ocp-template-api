@@ -16,6 +16,9 @@ version: v1
 #  - buf.build/acme/petapis
 #  - buf.build/acme/pkg:alpha
 #  - buf.build/acme/paymentapis:7e8b594e68324329a7aefc6e750d18b9
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/envoyproxy/protoc-gen-validate
 
 # build contains the options for builds.
 #

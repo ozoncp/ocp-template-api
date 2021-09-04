@@ -31,20 +31,11 @@ test:
 # ----------------------------------------------------------------
 
 .PHONY: generate
-generate: .vendor-proto .generate
+generate: .generate
 
 .generate:
 	@command -v buf 2>&1 > /dev/null || (mkdir -p $(GOBIN) && curl -sSL0 https://github.com/bufbuild/buf/releases/download/$(BUF_VERSION)/buf-$(shell uname -s)-$(shell uname -m) -o $(GOBIN)/buf && chmod +x $(GOBIN)/buf)
-	$(eval PROTOS:=$(CURDIR)/protos)
-	@[ -f $(PROTOS)/buf.yaml ] || PATH=$(GOBIN):$(PATH) buf mod init --doc -o $(PROTOS)
-	PATH=$(GOBIN):$(PATH) buf generate $(PROTOS)
-
-.vendor-proto:
-	$(eval VENDOR:=$(CURDIR)/vendor.protogen)
-	@[ -f $(VENDOR)/validate/validate.proto ] || (mkdir -p $(VENDOR)/validate/ && curl -sSL0 https://raw.githubusercontent.com/envoyproxy/protoc-gen-validate/$(PGV_VERSION)/validate/validate.proto -o $(VENDOR)/validate/validate.proto)
-	@[ -f $(VENDOR)/google/api/http.proto ] || (mkdir -p $(VENDOR)/google/api/ && curl -sSL0 https://raw.githubusercontent.com/googleapis/googleapis/$(GOOGLEAPIS_VERSION)/google/api/http.proto -o $(VENDOR)/google/api/http.proto)
-	@[ -f $(VENDOR)/google/api/annotations.proto ] || (mkdir -p $(VENDOR)/google/api/ && curl -sSL0 https://raw.githubusercontent.com/googleapis/googleapis/$(GOOGLEAPIS_VERSION)/google/api/annotations.proto -o $(VENDOR)/google/api/annotations.proto)
-	@[ -f pkg/$(SERVICE_NAME) ] || (mkdir -p pkg/$(SERVICE_NAME))
+	PATH=$(GOBIN):$(PATH) buf generate
 	cd pkg/$(SERVICE_NAME) && ls go.mod || go mod init github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME) && go mod tidy
 
 # ----------------------------------------------------------------
