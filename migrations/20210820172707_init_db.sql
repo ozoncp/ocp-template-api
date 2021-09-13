@@ -1,8 +1,8 @@
 -- +goose Up
-CREATE TABLE "template" (
-  "id" BIGSERIAL PRIMARY KEY,
-  "foo" BIGINT NOT NULL,
+CREATE TABLE template (
+  id BIGSERIAL PRIMARY KEY,
+  foo BIGINT NOT NULL
 );
 
 -- +goose Down
-DROP TABLE "offer";
+DROP TABLE offer;
