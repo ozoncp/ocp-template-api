@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"flag"
 	"fmt"
 
@@ -29,7 +28,7 @@ func main() {
 	}
 	cfg := config.GetConfigInstance()
 
-	migration := flag.String("migration", "", "Defines the migration start option")
+	migration := flag.Bool("migration", true, "Defines the migration start option")
 	flag.Parse()
 
 	log.Info().
@@ -54,9 +53,9 @@ func main() {
 		log.Fatal().Err(err).Msg("Failed init postgres")
 	}
 
-	if *migration != "" {
-		if err := migrate(db.DB, *migration); err != nil {
-			log.Fatal().Err(err).Msg("Failed migrating")
+	if *migration == true {
+		if err := goose.Up(db.DB, cfg.Database.Migrations); err != nil {
+			log.Fatal().Err(err).Msg("Migration failed")
 		}
 	}
 
@@ -69,23 +68,4 @@ func main() {
 	}
 
 	db.Close()
-}
-
-func migrate(db *sql.DB, command string) error {
-	switch command {
-	case "up":
-		if err := goose.Up(db, "migrations"); err != nil {
-			log.Error().Err(err).Msg("Migration failed")
-			return err
-		}
-	case "down":
-		if err := goose.Down(db, "migrations"); err != nil {
-			log.Error().Err(err).Msg("Migration failed")
-			return err
-		}
-
-	default:
-		log.Warn().Msgf("Invalid command for 'migration' flag: '%v'", command)
-	}
-	return nil
 }

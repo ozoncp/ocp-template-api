@@ -30,5 +30,5 @@ EXPOSE 8080
 EXPOSE 9100
 
 
-CMD ["./grpc-server", "--migration", "up"]
-# CMD ["./dlv", "--listen=:40000", "--headless=true", "--api-version=2", "--accept-multiclient", "exec", "./grpc-server --migration up"]
+# CMD ["./grpc-server", "--migration", "up"]
+CMD ["./dlv", "--listen=:40000", "--headless=true", "--api-version=2", "--accept-multiclient", "exec", "./grpc-server"]

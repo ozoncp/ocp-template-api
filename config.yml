@@ -37,6 +37,7 @@ database:
   password: docker
   name: ocp_template_api
   sslmode: disable
+  migrations: migrations
   driver: pgx
 
 kafka:

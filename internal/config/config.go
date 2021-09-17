@@ -24,13 +24,14 @@ func GetConfigInstance() Config {
 
 // Database - contains all parameters database connection.
 type Database struct {
-	Host     string `yaml:"host"`
-	Port     string `yaml:"port"`
-	User     string `yaml:"user"`
-	Password string `yaml:"password"`
-	Name     string `yaml:"name"`
-	SslMode  string `yaml:"sslmode"`
-	Driver   string `yaml:"driver"`
+	Host       string `yaml:"host"`
+	Port       string `yaml:"port"`
+	User       string `yaml:"user"`
+	Password   string `yaml:"password"`
+	Migrations string `yaml:"migrations"`
+	Name       string `yaml:"name"`
+	SslMode    string `yaml:"sslmode"`
+	Driver     string `yaml:"driver"`
 }
 
 // Grpc - contains parameter address grpc.
