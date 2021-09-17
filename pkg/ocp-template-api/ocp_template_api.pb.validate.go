@@ -101,17 +101,17 @@ var _ interface {
 	ErrorName() string
 } = TemplateValidationError{}
 
-// Validate checks the field values on CreateTemplateV1Request with the rules
+// Validate checks the field values on DescribeTemplateV1Request with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *CreateTemplateV1Request) Validate() error {
+func (m *DescribeTemplateV1Request) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	if m.GetFoo() <= 0 {
-		return CreateTemplateV1RequestValidationError{
-			field:  "Foo",
+	if m.GetId() <= 0 {
+		return DescribeTemplateV1RequestValidationError{
+			field:  "Id",
 			reason: "value must be greater than 0",
 		}
 	}
@@ -119,9 +119,9 @@ func (m *CreateTemplateV1Request) Validate() error {
 	return nil
 }
 
-// CreateTemplateV1RequestValidationError is the validation error returned by
-// CreateTemplateV1Request.Validate if the designated constraints aren't met.
-type CreateTemplateV1RequestValidationError struct {
+// DescribeTemplateV1RequestValidationError is the validation error returned by
+// DescribeTemplateV1Request.Validate if the designated constraints aren't met.
+type DescribeTemplateV1RequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -129,24 +129,24 @@ type CreateTemplateV1RequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e CreateTemplateV1RequestValidationError) Field() string { return e.field }
+func (e DescribeTemplateV1RequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CreateTemplateV1RequestValidationError) Reason() string { return e.reason }
+func (e DescribeTemplateV1RequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CreateTemplateV1RequestValidationError) Cause() error { return e.cause }
+func (e DescribeTemplateV1RequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CreateTemplateV1RequestValidationError) Key() bool { return e.key }
+func (e DescribeTemplateV1RequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CreateTemplateV1RequestValidationError) ErrorName() string {
-	return "CreateTemplateV1RequestValidationError"
+func (e DescribeTemplateV1RequestValidationError) ErrorName() string {
+	return "DescribeTemplateV1RequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e CreateTemplateV1RequestValidationError) Error() string {
+func (e DescribeTemplateV1RequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -158,14 +158,14 @@ func (e CreateTemplateV1RequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCreateTemplateV1Request.%s: %s%s",
+		"invalid %sDescribeTemplateV1Request.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CreateTemplateV1RequestValidationError{}
+var _ error = DescribeTemplateV1RequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -173,24 +173,32 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CreateTemplateV1RequestValidationError{}
+} = DescribeTemplateV1RequestValidationError{}
 
-// Validate checks the field values on CreateTemplateV1Response with the rules
-// defined in the proto definition for this message. If any rules are
+// Validate checks the field values on DescribeTemplateV1Response with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *CreateTemplateV1Response) Validate() error {
+func (m *DescribeTemplateV1Response) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	// no validation rules for Id
+	if v, ok := interface{}(m.GetValue()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DescribeTemplateV1ResponseValidationError{
+				field:  "Value",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	return nil
 }
 
-// CreateTemplateV1ResponseValidationError is the validation error returned by
-// CreateTemplateV1Response.Validate if the designated constraints aren't met.
-type CreateTemplateV1ResponseValidationError struct {
+// DescribeTemplateV1ResponseValidationError is the validation error returned
+// by DescribeTemplateV1Response.Validate if the designated constraints aren't met.
+type DescribeTemplateV1ResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -198,24 +206,24 @@ type CreateTemplateV1ResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e CreateTemplateV1ResponseValidationError) Field() string { return e.field }
+func (e DescribeTemplateV1ResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CreateTemplateV1ResponseValidationError) Reason() string { return e.reason }
+func (e DescribeTemplateV1ResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CreateTemplateV1ResponseValidationError) Cause() error { return e.cause }
+func (e DescribeTemplateV1ResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CreateTemplateV1ResponseValidationError) Key() bool { return e.key }
+func (e DescribeTemplateV1ResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CreateTemplateV1ResponseValidationError) ErrorName() string {
-	return "CreateTemplateV1ResponseValidationError"
+func (e DescribeTemplateV1ResponseValidationError) ErrorName() string {
+	return "DescribeTemplateV1ResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e CreateTemplateV1ResponseValidationError) Error() string {
+func (e DescribeTemplateV1ResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -227,14 +235,14 @@ func (e CreateTemplateV1ResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCreateTemplateV1Response.%s: %s%s",
+		"invalid %sDescribeTemplateV1Response.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CreateTemplateV1ResponseValidationError{}
+var _ error = DescribeTemplateV1ResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -242,4 +250,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CreateTemplateV1ResponseValidationError{}
+} = DescribeTemplateV1ResponseValidationError{}

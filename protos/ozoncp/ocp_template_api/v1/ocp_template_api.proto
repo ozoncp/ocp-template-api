@@ -9,8 +9,8 @@ option go_package = "github.com/ozoncp/ocp-template-api/pkg/ocp-template-api;ocp
 
 // OcpTemplateApiService - Service for working with templates
 service OcpTemplateApiService {
-  // CreateTemplateV1 - Create an template
-  rpc CreateTemplateV1(CreateTemplateV1Request) returns (CreateTemplateV1Response) {
+  // DescribeTemplateV1 - Describe a template
+  rpc DescribeTemplateV1(DescribeTemplateV1Request) returns (DescribeTemplateV1Response) {
     option (google.api.http) = {
       post: "/v1/templates"
       body: "*"
@@ -18,18 +18,15 @@ service OcpTemplateApiService {
   }
 }
 
-// Offer ...
 message Template {
   uint64 id  = 1;
   uint64 foo = 2;
 }
 
-// CreateOfferV1Request - create offer. Fields are validated
-message CreateTemplateV1Request {
-  uint64 foo = 1 [(validate.rules).uint64.gt = 0];
+message DescribeTemplateV1Request {
+  uint64 id = 1 [(validate.rules).uint64.gt = 0];
 }
 
-// CreateTemplateV1Response ...
-message CreateTemplateV1Response {
-  uint64 id = 1;
+message DescribeTemplateV1Response {
+  Template value = 1;
 }

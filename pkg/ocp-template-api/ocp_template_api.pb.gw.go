@@ -31,8 +31,8 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_OcpTemplateApiService_CreateTemplateV1_0(ctx context.Context, marshaler runtime.Marshaler, client OcpTemplateApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateTemplateV1Request
+func request_OcpTemplateApiService_DescribeTemplateV1_0(ctx context.Context, marshaler runtime.Marshaler, client OcpTemplateApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DescribeTemplateV1Request
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -43,13 +43,13 @@ func request_OcpTemplateApiService_CreateTemplateV1_0(ctx context.Context, marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.CreateTemplateV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.DescribeTemplateV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_OcpTemplateApiService_CreateTemplateV1_0(ctx context.Context, marshaler runtime.Marshaler, server OcpTemplateApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateTemplateV1Request
+func local_request_OcpTemplateApiService_DescribeTemplateV1_0(ctx context.Context, marshaler runtime.Marshaler, server OcpTemplateApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DescribeTemplateV1Request
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -60,7 +60,7 @@ func local_request_OcpTemplateApiService_CreateTemplateV1_0(ctx context.Context,
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.CreateTemplateV1(ctx, &protoReq)
+	msg, err := server.DescribeTemplateV1(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -71,18 +71,18 @@ func local_request_OcpTemplateApiService_CreateTemplateV1_0(ctx context.Context,
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterOcpTemplateApiServiceHandlerFromEndpoint instead.
 func RegisterOcpTemplateApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server OcpTemplateApiServiceServer) error {
 
-	mux.Handle("POST", pattern_OcpTemplateApiService_CreateTemplateV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_OcpTemplateApiService_DescribeTemplateV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozoncp.ocp_template_api.v1.OcpTemplateApiService/CreateTemplateV1", runtime.WithHTTPPathPattern("/v1/templates"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozoncp.ocp_template_api.v1.OcpTemplateApiService/DescribeTemplateV1", runtime.WithHTTPPathPattern("/v1/templates"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OcpTemplateApiService_CreateTemplateV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OcpTemplateApiService_DescribeTemplateV1_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -90,7 +90,7 @@ func RegisterOcpTemplateApiServiceHandlerServer(ctx context.Context, mux *runtim
 			return
 		}
 
-		forward_OcpTemplateApiService_CreateTemplateV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OcpTemplateApiService_DescribeTemplateV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -135,23 +135,23 @@ func RegisterOcpTemplateApiServiceHandler(ctx context.Context, mux *runtime.Serv
 // "OcpTemplateApiServiceClient" to call the correct interceptors.
 func RegisterOcpTemplateApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client OcpTemplateApiServiceClient) error {
 
-	mux.Handle("POST", pattern_OcpTemplateApiService_CreateTemplateV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_OcpTemplateApiService_DescribeTemplateV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozoncp.ocp_template_api.v1.OcpTemplateApiService/CreateTemplateV1", runtime.WithHTTPPathPattern("/v1/templates"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozoncp.ocp_template_api.v1.OcpTemplateApiService/DescribeTemplateV1", runtime.WithHTTPPathPattern("/v1/templates"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OcpTemplateApiService_CreateTemplateV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OcpTemplateApiService_DescribeTemplateV1_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OcpTemplateApiService_CreateTemplateV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OcpTemplateApiService_DescribeTemplateV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -159,9 +159,9 @@ func RegisterOcpTemplateApiServiceHandlerClient(ctx context.Context, mux *runtim
 }
 
 var (
-	pattern_OcpTemplateApiService_CreateTemplateV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "templates"}, ""))
+	pattern_OcpTemplateApiService_DescribeTemplateV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "templates"}, ""))
 )
 
 var (
-	forward_OcpTemplateApiService_CreateTemplateV1_0 = runtime.ForwardResponseMessage
+	forward_OcpTemplateApiService_DescribeTemplateV1_0 = runtime.ForwardResponseMessage
 )

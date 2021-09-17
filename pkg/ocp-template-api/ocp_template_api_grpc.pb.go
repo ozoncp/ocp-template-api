@@ -18,8 +18,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OcpTemplateApiServiceClient interface {
-	// CreateTemplateV1 - Create an template
-	CreateTemplateV1(ctx context.Context, in *CreateTemplateV1Request, opts ...grpc.CallOption) (*CreateTemplateV1Response, error)
+	// DescribeTemplateV1 - Describe a template
+	DescribeTemplateV1(ctx context.Context, in *DescribeTemplateV1Request, opts ...grpc.CallOption) (*DescribeTemplateV1Response, error)
 }
 
 type ocpTemplateApiServiceClient struct {
@@ -30,9 +30,9 @@ func NewOcpTemplateApiServiceClient(cc grpc.ClientConnInterface) OcpTemplateApiS
 	return &ocpTemplateApiServiceClient{cc}
 }
 
-func (c *ocpTemplateApiServiceClient) CreateTemplateV1(ctx context.Context, in *CreateTemplateV1Request, opts ...grpc.CallOption) (*CreateTemplateV1Response, error) {
-	out := new(CreateTemplateV1Response)
-	err := c.cc.Invoke(ctx, "/ozoncp.ocp_template_api.v1.OcpTemplateApiService/CreateTemplateV1", in, out, opts...)
+func (c *ocpTemplateApiServiceClient) DescribeTemplateV1(ctx context.Context, in *DescribeTemplateV1Request, opts ...grpc.CallOption) (*DescribeTemplateV1Response, error) {
+	out := new(DescribeTemplateV1Response)
+	err := c.cc.Invoke(ctx, "/ozoncp.ocp_template_api.v1.OcpTemplateApiService/DescribeTemplateV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -43,8 +43,8 @@ func (c *ocpTemplateApiServiceClient) CreateTemplateV1(ctx context.Context, in *
 // All implementations must embed UnimplementedOcpTemplateApiServiceServer
 // for forward compatibility
 type OcpTemplateApiServiceServer interface {
-	// CreateTemplateV1 - Create an template
-	CreateTemplateV1(context.Context, *CreateTemplateV1Request) (*CreateTemplateV1Response, error)
+	// DescribeTemplateV1 - Describe a template
+	DescribeTemplateV1(context.Context, *DescribeTemplateV1Request) (*DescribeTemplateV1Response, error)
 	mustEmbedUnimplementedOcpTemplateApiServiceServer()
 }
 
@@ -52,8 +52,8 @@ type OcpTemplateApiServiceServer interface {
 type UnimplementedOcpTemplateApiServiceServer struct {
 }
 
-func (UnimplementedOcpTemplateApiServiceServer) CreateTemplateV1(context.Context, *CreateTemplateV1Request) (*CreateTemplateV1Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateTemplateV1 not implemented")
+func (UnimplementedOcpTemplateApiServiceServer) DescribeTemplateV1(context.Context, *DescribeTemplateV1Request) (*DescribeTemplateV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DescribeTemplateV1 not implemented")
 }
 func (UnimplementedOcpTemplateApiServiceServer) mustEmbedUnimplementedOcpTemplateApiServiceServer() {}
 
@@ -68,20 +68,20 @@ func RegisterOcpTemplateApiServiceServer(s grpc.ServiceRegistrar, srv OcpTemplat
 	s.RegisterService(&OcpTemplateApiService_ServiceDesc, srv)
 }
 
-func _OcpTemplateApiService_CreateTemplateV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateTemplateV1Request)
+func _OcpTemplateApiService_DescribeTemplateV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeTemplateV1Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OcpTemplateApiServiceServer).CreateTemplateV1(ctx, in)
+		return srv.(OcpTemplateApiServiceServer).DescribeTemplateV1(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ozoncp.ocp_template_api.v1.OcpTemplateApiService/CreateTemplateV1",
+		FullMethod: "/ozoncp.ocp_template_api.v1.OcpTemplateApiService/DescribeTemplateV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OcpTemplateApiServiceServer).CreateTemplateV1(ctx, req.(*CreateTemplateV1Request))
+		return srv.(OcpTemplateApiServiceServer).DescribeTemplateV1(ctx, req.(*DescribeTemplateV1Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -94,8 +94,8 @@ var OcpTemplateApiService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*OcpTemplateApiServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateTemplateV1",
-			Handler:    _OcpTemplateApiService_CreateTemplateV1_Handler,
+			MethodName: "DescribeTemplateV1",
+			Handler:    _OcpTemplateApiService_DescribeTemplateV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
