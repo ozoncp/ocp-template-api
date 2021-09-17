@@ -52,6 +52,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed init postgres")
 	}
+	defer db.Close()
 
 	if *migration == true {
 		if err := goose.Up(db.DB, cfg.Database.Migrations); err != nil {
@@ -59,13 +60,13 @@ func main() {
 		}
 	}
 
-	if err := tracer.InitTracing("ocp_template_api"); err != nil {
+	tracing, err := tracer.NewTracer(&cfg)
+	if err != nil {
 		log.Fatal().Err(err).Msg("Failed init tracing")
 	}
+	defer tracing.Close()
 
 	if err := server.NewGrpcServer(db, batchSize).Start(&cfg); err != nil {
 		log.Fatal().Err(err).Msg("Failed creating gRPC server")
 	}
-
-	db.Close()
 }

@@ -21,6 +21,7 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpcrecovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
+	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 
 	"github.com/ozoncp/ocp-template-api/internal/api"
@@ -98,6 +99,7 @@ func (s *GrpcServer) Start(cfg *config.Config) error {
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			grpc_ctxtags.UnaryServerInterceptor(),
 			grpc_prometheus.UnaryServerInterceptor,
+			grpc_opentracing.UnaryServerInterceptor(),
 			grpcrecovery.UnaryServerInterceptor(),
 		)),
 	)

@@ -20,6 +20,7 @@ metrics:
   path: /metrics
 
 jaeger:
+  service: "ocp-template-api"
   host: "jaeger"
   port: ":6831"
 
