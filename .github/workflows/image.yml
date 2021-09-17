@@ -37,7 +37,6 @@ jobs:
 
       - name: Push image to GitHub Packages
         run: |
-          docker push $IMAGE_NAME/grpc-server:latest
           docker push $IMAGE_NAME/grpc-server:$VERSION
 
       - name: Logout
