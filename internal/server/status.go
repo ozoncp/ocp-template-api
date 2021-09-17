@@ -11,7 +11,6 @@ import (
 )
 
 func createStatusServer(cfg *config.Config, isReady *atomic.Value) *http.Server {
-
 	statusAddr := fmt.Sprintf("%s:%v", cfg.Status.Host, cfg.Status.Port)
 
 	mux := http.DefaultServeMux
@@ -44,7 +43,6 @@ func readinessHandler(isReady *atomic.Value) http.HandlerFunc {
 }
 
 func versionHandler(cfg *config.Config) func(w http.ResponseWriter, _ *http.Request) {
-
 	return func(w http.ResponseWriter, _ *http.Request) {
 		data := map[string]interface{}{
 			"name":        cfg.Project.Name,

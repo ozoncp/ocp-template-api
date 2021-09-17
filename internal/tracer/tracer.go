@@ -12,9 +12,8 @@ import (
 	jaegercfg "github.com/uber/jaeger-client-go/config"
 )
 
-// NewTracer - returns new tracer
+// NewTracer - returns new tracer.
 func NewTracer(cfg *config.Config) (io.Closer, error) {
-
 	cfgMetrics := &jaegercfg.Configuration{
 		ServiceName: cfg.Jaeger.Service,
 		Sampler: &jaegercfg.SamplerConfig{
@@ -29,6 +28,7 @@ func NewTracer(cfg *config.Config) (io.Closer, error) {
 	tracer, closer, err := cfgMetrics.NewTracer(jaegercfg.Logger(jaeger.StdLogger))
 	if err != nil {
 		log.Err(err).Msgf("failed init jaeger: %v", err)
+
 		return nil, err
 	}
 	opentracing.SetGlobalTracer(tracer)

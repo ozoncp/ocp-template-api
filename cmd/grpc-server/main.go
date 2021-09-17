@@ -22,7 +22,6 @@ var (
 )
 
 func main() {
-
 	if err := config.ReadConfigYML("config.yml"); err != nil {
 		log.Fatal().Err(err).Msg("Failed init configuration")
 	}
@@ -54,19 +53,25 @@ func main() {
 	}
 	defer db.Close()
 
-	if *migration == true {
+	if *migration {
 		if err := goose.Up(db.DB, cfg.Database.Migrations); err != nil {
-			log.Fatal().Err(err).Msg("Migration failed")
+			log.Error().Err(err).Msg("Migration failed")
+
+			return
 		}
 	}
 
 	tracing, err := tracer.NewTracer(&cfg)
 	if err != nil {
-		log.Fatal().Err(err).Msg("Failed init tracing")
+		log.Error().Err(err).Msg("Failed init tracing")
+
+		return
 	}
 	defer tracing.Close()
 
 	if err := server.NewGrpcServer(db, batchSize).Start(&cfg); err != nil {
-		log.Fatal().Err(err).Msg("Failed creating gRPC server")
+		log.Error().Err(err).Msg("Failed creating gRPC server")
+
+		return
 	}
 }

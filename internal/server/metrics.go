@@ -9,7 +9,6 @@ import (
 )
 
 func createMetricsServer(cfg *config.Config) *http.Server {
-
 	addr := fmt.Sprintf("%s:%d", cfg.Metrics.Host, cfg.Metrics.Port)
 
 	mux := http.DefaultServeMux
