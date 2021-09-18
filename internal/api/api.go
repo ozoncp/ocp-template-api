@@ -15,10 +15,12 @@ import (
 	pb "github.com/ozoncp/ocp-template-api/pkg/ocp-template-api"
 )
 
-totalTemplateNotFound = promauto.NewCounter(prometheus.CounterOpts{
+var (
+	totalTemplateNotFound = promauto.NewCounter(prometheus.CounterOpts{
 		Name: "ocp_template_api_template_not_found_total",
 		Help: "Total number of templates that were not found",
 	})
+)
 
 type templateAPI struct {
 	pb.UnimplementedOcpTemplateApiServiceServer
