@@ -11,6 +11,7 @@ RUN make deps && make build
 # gRPC Server
 
 FROM alpine:latest as server
+LABEL org.opencontainers.image.source https://${GITHUB_PATH}
 RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 
