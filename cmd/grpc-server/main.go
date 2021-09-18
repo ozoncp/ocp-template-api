@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 
 	_ "github.com/jackc/pgx/v4"
@@ -36,6 +37,11 @@ func main() {
 		Bool("debug", cfg.Project.Debug).
 		Str("environment", cfg.Project.Environment).
 		Msgf("Starting service: %s", cfg.Project.Name)
+
+	// default: zerolog.SetGlobalLevel(zerolog.InfoLevel)
+	if cfg.Project.Debug {
+		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	}
 
 	dsn := fmt.Sprintf("host=%v port=%v user=%v password=%v dbname=%v sslmode=%v",
 		cfg.Database.Host,

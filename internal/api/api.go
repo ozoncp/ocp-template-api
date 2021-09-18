@@ -3,14 +3,22 @@ package api
 import (
 	"context"
 
-	"github.com/ozoncp/ocp-template-api/internal/repo"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
 
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
+	"github.com/ozoncp/ocp-template-api/internal/repo"
+
 	pb "github.com/ozoncp/ocp-template-api/pkg/ocp-template-api"
 )
+
+totalTemplateNotFound = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "ocp_template_api_template_not_found_total",
+		Help: "Total number of templates that were not found",
+	})
 
 type templateAPI struct {
 	pb.UnimplementedOcpTemplateApiServiceServer
@@ -40,6 +48,9 @@ func (o *templateAPI) DescribeTemplateV1(
 	}
 
 	if template == nil {
+		log.Debug().Uint64("templateId", req.Id).Msg("template not found")
+		totalTemplateNotFound.Inc()
+
 		return nil, status.Error(codes.NotFound, "template not found")
 	}
 

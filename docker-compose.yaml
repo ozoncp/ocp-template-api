@@ -205,7 +205,7 @@ services:
 
   # Graylog: https://hub.docker.com/r/graylog/graylog/
   graylog:
-    image: graylog/graylog:4.1
+    image: graylog/graylog:4.0
     environment:
       # CHANGE ME (must be at least 16 characters)!
       - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
@@ -232,6 +232,7 @@ services:
       - 12201:12201
       # GELF UDP
       - 12201:12201/udp
+    restart: always
 
 volumes:
   pgdata:
