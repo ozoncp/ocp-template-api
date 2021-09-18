@@ -14,7 +14,7 @@ import (
 
 // NewTracer - returns new tracer.
 func NewTracer(cfg *config.Config) (io.Closer, error) {
-	cfgMetrics := &jaegercfg.Configuration{
+	cfgTracer := &jaegercfg.Configuration{
 		ServiceName: cfg.Jaeger.Service,
 		Sampler: &jaegercfg.SamplerConfig{
 			Type:  jaeger.SamplerTypeConst,
@@ -25,7 +25,7 @@ func NewTracer(cfg *config.Config) (io.Closer, error) {
 			LocalAgentHostPort: cfg.Jaeger.Host + cfg.Jaeger.Port,
 		},
 	}
-	tracer, closer, err := cfgMetrics.NewTracer(jaegercfg.Logger(jaeger.StdLogger))
+	tracer, closer, err := cfgTracer.NewTracer(jaegercfg.Logger(jaeger.StdLogger))
 	if err != nil {
 		log.Err(err).Msgf("failed init jaeger: %v", err)
 
