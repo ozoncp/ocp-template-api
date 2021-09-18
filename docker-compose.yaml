@@ -2,7 +2,9 @@ version: "3.9"
 
 services:
   ocp-template-api:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: unless-stopped
     logging:
       driver: 'gelf'
@@ -23,12 +25,12 @@ services:
       - 9100:9100 # Metrics prometheus
       - 8000:8000 # Status prometheus
       - 40000:40000 # Debug port
-    # healthcheck:
-    #   test: ['CMD', 'curl', '-f', 'http://localhost:8000/live']
-    #   interval: 1m
-    #   timeout: 10s
-    #   retries: 3
-    #   start_period: 20s
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8000/live']
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 20s
     volumes:
       - ./migrations:/root/migrations
       - ./config.yml:/root/config.yml
@@ -203,7 +205,7 @@ services:
 
   # Graylog: https://hub.docker.com/r/graylog/graylog/
   graylog:
-    image: graylog/graylog:4.0
+    image: graylog/graylog:4.1
     environment:
       # CHANGE ME (must be at least 16 characters)!
       - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
