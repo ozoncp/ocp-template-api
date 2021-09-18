@@ -13,6 +13,7 @@ jobs:
     env:
       IMAGE_NAME: docker.pkg.github.com/${{ github.repository }}
       COMMIT_HASH: ${{ github.sha }}
+    environment: default
 
     steps:      
       - name: Set env version
