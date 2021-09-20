@@ -104,3 +104,4 @@ $ pgcli "postgresql://docker:docker@localhost:5432/ocp_template_api"
 ### Thanks
 
 - [Evald Smalyakov](https://github.com/evald24)
+- [Michael Morgoev](https://github.com/zerospiel)
