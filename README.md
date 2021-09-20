@@ -92,3 +92,15 @@ Graylog is a leading centralized log management solution for capturing, storing,
 - http://localhost:9000
 - - login `admin`
 - - password `admin`
+
+### PostgreSQL
+
+For the convenience of working with the database, you can use the [pgcli](https://github.com/dbcli/pgcli) utility. Migrations are rolled out when the application starts from the **./migrations** directory.
+
+```sh
+$ pgcli "postgresql://docker:docker@localhost:5432/ocp_template_api"
+```
+
+### Thanks
+
+- [Evald Smalyakov](https://github.com/evald24)
