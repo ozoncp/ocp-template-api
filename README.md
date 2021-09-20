@@ -95,7 +95,7 @@ Graylog is a leading centralized log management solution for capturing, storing,
 
 ### PostgreSQL
 
-For the convenience of working with the database, you can use the [pgcli](https://github.com/dbcli/pgcli) utility. Migrations are rolled out when the application starts from the **./migrations** directory.
+For the convenience of working with the database, you can use the [pgcli](https://github.com/dbcli/pgcli) utility. Migrations are rolled out when the service starts. migrations are located in the **./migrations** directory and are created using the [goose](https://github.com/pressly/goose) tool.
 
 ```sh
 $ pgcli "postgresql://docker:docker@localhost:5432/ocp_template_api"
