@@ -5,4 +5,4 @@ CREATE TABLE template (
 );
 
 -- +goose Down
-DROP TABLE offer;
+DROP TABLE template;
